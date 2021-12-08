@@ -24,21 +24,35 @@ def parse_data(url, params):
 
 
 def main():
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-    h = logging.FileHandler(filename="group_list.log", encoding="utf-8", mode="w")
-    logger.addHandler(h)
+    # logging.basicConfig(level=logging.INFO)
+    # logger = logging.getLogger(__name__)
+    # logger.setLevel(logging.DEBUG)
+    # h = logging.FileHandler(filename="group_list.log", encoding="utf-8", mode="w")
+    # logger.addHandler(h)
 
     # ホームページのURLを格納する
-    TARGET_URL = "https://lister.jp"
+    TARGET_URL = "https://lister.jp/industry/group/all/"
     industryall_organization = []
+    table_head = ["大分類", "中分類", "小分類", "業界団体名", "企業一覧", "ホームページ"]
 
-    response = request_data(TARGET_URL + "/industry/group/")
+    response = request_data(TARGET_URL)
     soup = BeautifulSoup(response.text, features="lxml")
-    logger.info(soup)
-    # logger.debug(soup.select("#industry-group-lists > ul > li:nth-child(1) > ul > li > a"))
+    # logger.debug(soup)
+    print(soup.select("#industry-group-table > thead > tr > td:nth-child(1)"))
 
+
+"""
+import pandas as pd
+df = pd.DataFrame({
+    '名前' :['田中', '山田', '高橋'],
+    '役割' : ['営業部長', '広報部', '技術責任者'],
+    '身長' : [178, 173, 169]
+    })
+print(df)
+print(df.dtypes)
+
+print(df.columns) # 列ラベルの確認(辞書型のkeyが列ラベル）
+"""
 
 if __name__ == "__main__":
     main()
