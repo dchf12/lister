@@ -49,10 +49,13 @@ df = pd.DataFrame({
     '身長' : [178, 173, 169]
     })
 print(df)
+
 print(df.dtypes)
+
 
 print(df.columns) # 列ラベルの確認(辞書型のkeyが列ラベル）
 """
+
 
 if __name__ == "__main__":
     main()
