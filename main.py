@@ -1,8 +1,8 @@
+import os
 import time
 
 import requests
 from bs4 import BeautifulSoup
-import logging
 
 
 def request_data(url, params=None):
@@ -16,45 +16,51 @@ def request_data(url, params=None):
     return res
 
 
-def parse_data(url, params):
+def parse_data(res):
     # 結果解析
-    res = request_data(url, params)
-    soup = BeautifulSoup(res.text, features="lxml")
+    soup = BeautifulSoup(res, features="lxml")
     return soup
 
 
+def get_html(url, file_name):
+    if os.path.exists(file_name):
+        with open(file_name, "r", encoding="utf-8") as f:
+            response = f.read()
+        print("exists")
+    else:
+        response = request_data(url).text
+        with open(file_name, "w", encoding="utf-8") as f:
+            f.write(response)
+        print("not exists")
+    return response
+
+
 def main():
-    # logging.basicConfig(level=logging.INFO)
-    # logger = logging.getLogger(__name__)
-    # logger.setLevel(logging.DEBUG)
-    # h = logging.FileHandler(filename="group_list.log", encoding="utf-8", mode="w")
-    # logger.addHandler(h)
 
     # ホームページのURLを格納する
     TARGET_URL = "https://lister.jp/industry/group/all/"
     industryall_organization = []
     table_head = ["大分類", "中分類", "小分類", "業界団体名", "企業一覧", "ホームページ"]
 
-    response = request_data(TARGET_URL)
-    soup = BeautifulSoup(response.text, features="lxml")
-    # logger.debug(soup)
-    print(soup.select("#industry-group-table > thead > tr > td:nth-child(1)"))
+    HTML_FILE = "group_list.html"
+    response = get_html(TARGET_URL, HTML_FILE)
 
-
-"""
-import pandas as pd
-df = pd.DataFrame({
-    '名前' :['田中', '山田', '高橋'],
-    '役割' : ['営業部長', '広報部', '技術責任者'],
-    '身長' : [178, 173, 169]
-    })
-print(df)
-print(df.dtypes)
-
-
-print(df.columns) # 列ラベルの確認(辞書型のkeyが列ラベル）
-"""
+    soup = parse_data(response)
+    # print(soup)
+    print(
+        soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(1)")[0].string
+    )
 
 
 if __name__ == "__main__":
     main()
+
+    # import pandas as pd
+
+    # df = pd.DataFrame(
+    #     {"名前": ["田中", "山田", "高橋"], "役割": ["営業部長", "広報部", "技術責任者"], "身長": [178, 173, 169]}
+    # )
+    # print(df)
+    # print(df.dtypes)
+
+    # print(df.columns)  # 列ラベルの確認(辞書型のkeyが列ラベル）
