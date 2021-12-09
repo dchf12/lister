@@ -37,19 +37,21 @@ def get_html(url, file_name):
 
 def main():
 
-    # ホームページのURLを格納する
+    # urlにrequest
     TARGET_URL = "https://lister.jp/industry/group/all/"
-    industryall_organization = []
-    table_head = ["大分類", "中分類", "小分類", "業界団体名", "企業一覧", "ホームページ"]
-
     HTML_FILE = "group_list.html"
     response = get_html(TARGET_URL, HTML_FILE)
-
     soup = parse_data(response)
-    # print(soup)
-    print(
-        soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(1)")[0].string
-    )
+
+    # 表頭の一覧を取得
+    table_head = [
+        head_one.string for head_one in soup.select("#industry-group-table > thead > tr > td")
+    ]
+
+    # 団体一覧を取得
+    industryall_organization = []
+    print(soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(4)"))
+    # 企業一覧・ホームページのURL取得
 
 
 if __name__ == "__main__":
