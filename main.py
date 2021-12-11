@@ -44,14 +44,23 @@ def main():
     soup = parse_data(response)
 
     # 表頭の一覧を取得
-    table_head = [
-        head_one.string for head_one in soup.select("#industry-group-table > thead > tr > td")
-    ]
+    s_select = soup.select("#industry-group-table > thead > tr > td")
+    table_head = [head.string for head in s_select]
+    print(table_head)
 
     # 団体一覧を取得
-    industryall_organization = []
-    print(soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(4)"))
-    # 企業一覧・ホームページのURL取得
+    # s_select = soup.select("#industry-group-table > tbody > tr:nth-child(i) > td")
+    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td")
+    industryall_organization = [item.string for item in s_select]
+    print(industryall_organization)
+
+    # 企業一覧のURL取得 if
+    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(5) > a")
+    print(s_select[0].get("href"))
+
+    # ホームページのURL取得
+    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(6) > a")
+    print(s_select[0].get("href"))
 
 
 if __name__ == "__main__":
