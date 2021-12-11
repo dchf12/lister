@@ -37,19 +37,30 @@ def get_html(url, file_name):
 
 def main():
 
-    # ホームページのURLを格納する
+    # urlにrequest
     TARGET_URL = "https://lister.jp/industry/group/all/"
-    industryall_organization = []
-    table_head = ["大分類", "中分類", "小分類", "業界団体名", "企業一覧", "ホームページ"]
-
     HTML_FILE = "group_list.html"
     response = get_html(TARGET_URL, HTML_FILE)
-
     soup = parse_data(response)
-    # print(soup)
-    print(
-        soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(1)")[0].string
-    )
+
+    # 表頭の一覧を取得
+    s_select = soup.select("#industry-group-table > thead > tr > td")
+    table_head = [head.string for head in s_select]
+    print(table_head)
+
+    # 団体一覧を取得
+    # s_select = soup.select("#industry-group-table > tbody > tr:nth-child(i) > td")
+    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td")
+    industryall_organization = [item.string for item in s_select]
+    print(industryall_organization)
+
+    # 企業一覧のURL取得 if
+    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(5) > a")
+    print(s_select[0].get("href"))
+
+    # ホームページのURL取得
+    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(6) > a")
+    print(s_select[0].get("href"))
 
 
 if __name__ == "__main__":
