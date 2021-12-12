@@ -3,6 +3,7 @@ import time
 
 import requests
 from bs4 import BeautifulSoup
+import src.stopwatch as stopwatch
 
 
 def request_data(url, params=None):
@@ -35,6 +36,7 @@ def get_html(url, file_name):
     return response
 
 
+@stopwatch
 def main():
 
     # urlにrequest
@@ -45,22 +47,29 @@ def main():
 
     # 表頭の一覧を取得
     s_select = soup.select("#industry-group-table > thead > tr > td")
-    table_head = [head.string for head in s_select]
+    table_head = [s.string for s in s_select]
     print(table_head)
 
     # 団体一覧を取得
-    # s_select = soup.select("#industry-group-table > tbody > tr:nth-child(i) > td")
-    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td")
-    industryall_organization = [item.string for item in s_select]
-    print(industryall_organization)
+    industryall_organization_all = [tr for tr in soup.select("#industry-group-table > tbody > tr")]
+    industryall_organization_one = [
+        [td.string for td in tr] for tr in industryall_organization_all
+    ]
+    # print(industryall_organization_one)
 
-    # 企業一覧のURL取得 if
-    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(5) > a")
-    print(s_select[0].get("href"))
+    # 企業一覧のURL取得
+    corporate_all = [
+        tr for tr in soup.select("#industry-group-table > tbody > tr > td:nth-child(5) > a")
+    ]
+    corporate_one = [tag_a.get("href") for tag_a in corporate_all]
+    # print(corporate_one)
 
     # ホームページのURL取得
-    s_select = soup.select("#industry-group-table > tbody > tr:nth-child(1) > td:nth-child(6) > a")
-    print(s_select[0].get("href"))
+    homepage_all = [
+        tr for tr in soup.select("#industry-group-table > tbody > tr > td:nth-child(6) > a")
+    ]
+    homepage_one = [tag_a.get("href") for tag_a in homepage_all]
+    # print(homepage_one)
 
 
 if __name__ == "__main__":
