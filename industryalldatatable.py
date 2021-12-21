@@ -15,5 +15,5 @@ class IndustryallDataTable:
             else:
                 self.df.at[i, self.df.columns[5]] = homepages.pop(0)
 
-    def save_file(self):
-        self.df.to_csv("pandas.csv", index=False)
+    def save_file(self, filename):
+        self.df.to_csv(filename, index=False)

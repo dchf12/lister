@@ -35,7 +35,7 @@ def main():
 
     i_data = IndustryallDataTable()
     i_data.modify_dataframe(table_head, industryall_groups, corporate_urls, homepage_urls)
-    i_data.save_file()
+    i_data.save_file("pandas.csv")
 
 
 if __name__ == "__main__":
