@@ -24,7 +24,7 @@ def main():
     # i_data = IndustryallDataTable()
     # i_data.modify_dataframe()
     # i_data.save_file("housing_manager.csv")
-
+    
 
 if __name__ == "__main__":
     main()
