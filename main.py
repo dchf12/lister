@@ -1,5 +1,5 @@
-from crawler import Crawler
-from industryalldatatable import IndustryallDataTable
+from crawler import crawler
+from datatable import DataTable
 
 AREA = "tokyo"
 TARGET_URL = f"https://www.homes.co.jp/realtor/{AREA}/list/"  # requestするURL
@@ -21,10 +21,10 @@ def main():
     href = [x for x in crawler.get_elements_by_css_selector(selector)]
     print(href)
 
-    # i_data = IndustryallDataTable()
+    # i_data = DataTable()
     # i_data.modify_dataframe()
     # i_data.save_file("housing_manager.csv")
-    
+
 
 if __name__ == "__main__":
     main()
