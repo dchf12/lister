@@ -31,7 +31,7 @@ class Crawler:
             with open(html_file, "r", encoding="utf-8") as f:
                 self.html_data = f.read()
         else:
-            self.html_data = self.request_data(self.url).text
+            self.html_data = self.request_data().text
             with open(html_file, "w", encoding="utf-8") as f:
                 f.write(self.html_data)
 
