@@ -1,4 +1,3 @@
-import os
 import time
 
 import requests
@@ -24,16 +23,8 @@ class Crawler:
 
     def parse_data(self):
         # 結果解析
+        self.html_data = self.request_data().text
         self.soup = BeautifulSoup(self.html_data, features="lxml")
-
-    def get_html(self, html_file):
-        if os.path.exists(html_file):
-            with open(html_file, "r", encoding="utf-8") as f:
-                self.html_data = f.read()
-        else:
-            self.html_data = self.request_data().text
-            with open(html_file, "w", encoding="utf-8") as f:
-                f.write(self.html_data)
 
     def get_elements_by_css_selector(self, selector):
         s_select = self.soup.select(selector)
