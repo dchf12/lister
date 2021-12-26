@@ -1,10 +1,7 @@
-from crawler import crawler
+from crawler import Crawler
 from datatable import DataTable
 
-AREA = "tokyo"
-TARGET_URL = f"https://www.homes.co.jp/realtor/{AREA}/list/"  # requestするURL
-
-HTML_FILE = "housing_manager.html"  # requestしたurlのhtmlを保存するhtml
+TARGET_URL = f""  # requestするURL
 
 
 def main():
@@ -13,7 +10,6 @@ def main():
     crawler = Crawler(url=TARGET_URL, params=params)
 
     # urlにrequest
-    crawler.get_html(HTML_FILE)
     crawler.parse_data()
     print(crawler.soup)
 
