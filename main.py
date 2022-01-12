@@ -1,9 +1,10 @@
+from crawler import Crawler
+from datatable import DataTable
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-
-from crawler import Crawler
+from selenium.webdriver.common.by import By
+import time
 
 # Seleniumをあらゆる環境で起動させるオプション
 options = Options()
@@ -52,8 +53,7 @@ def scraping_for_selenium(url):
         driver.get(f"{url}")
         stores = []
         for i in range(1, 500):
-            selector = f"#contents > div.shopsearchresultblock > div.shoplist > ul:nth-child({i}) \
-            > li.table > table > tbody "
+            selector = f"#contents > div.shopsearchresultblock > div.shoplist > ul:nth-child({i}) > li.table > table > tbody "
             items = driver.find_element(By.CSS_SELECTOR, selector).text
             stores.append(items)
     except Exception as e:
