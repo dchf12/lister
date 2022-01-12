@@ -1,7 +1,16 @@
 from crawler import Crawler
 from datatable import DataTable
 
-TARGET_URL = f""  # requestするURL
+TARGET_URL = ""  # requestするURL
+PREF_FILE = "./todohuken/jp-prefectures.txt"
+
+
+def load_file(file_path):
+    with open(file_path, encoding="utf-8", mode="r") as f:
+        res = f.readlines()
+    for i, r in enumerate(res):
+        res[i] = r.strip()
+    return res
 
 
 def main():
