@@ -26,10 +26,6 @@ def main():
     href = [x for x in crawler.get_elements_by_css_selector(selector)]
     print(href)
 
-    # i_data = DataTable()
-    # i_data.modify_dataframe()
-    # i_data.save_file("housing_manager.csv")
-
 
 if __name__ == "__main__":
     main()
