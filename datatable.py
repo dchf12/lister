@@ -2,16 +2,16 @@ import pandas as pd
 
 
 class DataTable:
-    def __init__(self, *args):
-        super(DataTable, self).__init__(*args)
+    def __init__(self):
+        super().__init__()
 
     def save_file(self, filename):
         self.df.to_csv(filename, index=False)
 
 
 class IndustryallDataTable(DataTable):
-    def __init__(self, *args):
-        super(DataTable, self).__init__(*args)
+    def __init__(self):
+        super().__init__()
 
     def modify_dataframe(self, table_head, industryalls, corporates, homepages):
         self.df = pd.DataFrame(industryalls, columns=table_head)
